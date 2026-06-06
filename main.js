@@ -1,6 +1,5 @@
 const { app, BrowserWindow, Menu } = require('electron');
 const path = require('path');
-const isDev = require('electron-is-dev');
 
 let mainWindow;
 
@@ -16,18 +15,10 @@ function createWindow() {
       contextIsolation: true,
       enableRemoteModule: false
     },
-    icon: path.join(__dirname, 'assets/icon.png')
+    icon: path.join(__dirname, 'assets/icon.ico')
   });
 
-  const startUrl = isDev 
-    ? 'http://localhost:3000'
-    : `file://${path.join(__dirname, 'src/index.html')}`;
-
   mainWindow.loadFile(path.join(__dirname, 'src/index.html'));
-  
-  if (isDev) {
-    mainWindow.webContents.openDevTools();
-  }
 
   mainWindow.on('closed', () => {
     mainWindow = null;
@@ -47,6 +38,11 @@ app.on('activate', () => {
     createWindow();
   }
 });
+
+// Handle squirrel events on Windows
+if (require('electron-squirrel-startup')) {
+  app.quit();
+}
 
 // Create menu
 const template = [
@@ -73,7 +69,7 @@ const template = [
             type: 'info',
             title: 'About Minecraft Biome Guide',
             message: 'Minecraft Biome Guide v1.0.0',
-            detail: 'A comprehensive guide to all Minecraft biomes and their resources.'
+            detail: 'A comprehensive guide to all Minecraft biomes and their resources.\n\nMade with ❤️ by Rollingralf'
           });
         }
       }
