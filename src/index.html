@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minecraft Biome Guide</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="root">
+    <div class="container">
+      <header>
+        <h1>🌍 Minecraft Biome Guide</h1>
+        <p>Ontdek alles over Minecraft Biomes en hun resources</p>
+      </header>
+
+      <div class="main-content">
+        <aside class="sidebar">
+          <div class="search-box">
+            <input 
+              type="text" 
+              id="searchInput" 
+              placeholder="Zoek een biome..." 
+              class="search-input"
+            >
+          </div>
+          <div id="biomeList" class="biome-list">
+            <!-- Biomes worden hier ingeladen -->
+          </div>
+        </aside>
+
+        <main class="content">
+          <div id="biomeContent" class="biome-content">
+            <div class="welcome">
+              <h2>Welkom bij de Minecraft Biome Guide!</h2>
+              <p>Kies een biome aan de linkerkant om meer informatie te zien.</p>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <script src="data/biomes.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
