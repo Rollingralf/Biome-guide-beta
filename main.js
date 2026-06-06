@@ -5,17 +5,16 @@ let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 800,
-    minWidth: 800,
-    minHeight: 600,
+    width: 1400,
+    height: 900,
+    minWidth: 900,
+    minHeight: 700,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: false,
       contextIsolation: true,
-      enableRemoteModule: false
-    },
-    icon: path.join(__dirname, 'assets/icon.ico')
+      enableRemoteModule: false,
+      preload: path.join(__dirname, 'preload.js')
+    }
   });
 
   mainWindow.loadFile(path.join(__dirname, 'src/index.html'));
@@ -25,57 +24,22 @@ function createWindow() {
   });
 }
 
-app.on('ready', createWindow);
-
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-});
-
-app.on('activate', () => {
-  if (mainWindow === null) {
-    createWindow();
-  }
-});
-
-// Handle squirrel events on Windows
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
-// Create menu
-const template = [
+app.on('ready', createWindow);
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') app.quit();
+});
+app.on('activate', () => {
+  if (mainWindow === null) createWindow();
+});
+
+const menu = Menu.buildFromTemplate([
   {
     label: 'File',
-    submenu: [
-      {
-        label: 'Exit',
-        accelerator: 'CmdOrCtrl+Q',
-        click: () => {
-          app.quit();
-        }
-      }
-    ]
-  },
-  {
-    label: 'Help',
-    submenu: [
-      {
-        label: 'About',
-        click: () => {
-          const { dialog } = require('electron');
-          dialog.showMessageBox(mainWindow, {
-            type: 'info',
-            title: 'About Minecraft Biome Guide',
-            message: 'Minecraft Biome Guide v1.0.0',
-            detail: 'A comprehensive guide to all Minecraft biomes and their resources.\n\nMade with ❤️ by Rollingralf'
-          });
-        }
-      }
-    ]
+    submenu: [{ label: 'Exit', accelerator: 'CmdOrCtrl+Q', click: () => app.quit() }]
   }
-];
-
-const menu = Menu.buildFromTemplate(template);
+]);
 Menu.setApplicationMenu(menu);
